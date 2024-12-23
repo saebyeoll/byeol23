@@ -29,9 +29,10 @@ JSON 웹 토큰(JWT) 기반 인증
 <h1>username == "test" && password == "1234" // 임시로 설정한 아이디 비번</h1>
 <h2>디자인 수정 필요</h2>
 1.로고 화면(앱 실행시 맨 처음에 나오는 화면)<br>
-
+2.로그인 화면(로고 뒤에)<br>
+3.메인 화면(로그인 후)<br>
 <image src="https://github.com/user-attachments/assets/456be02b-ac26-4b59-a452-c8d7aff00a79"  height="400"/>
-
 
 <image src="https://github.com/user-attachments/assets/522d355c-1ec6-4f46-9789-7311ea1acca9"  height="400"/>
 
+<image src="https://github.com/user-attachments/assets/8bbff461-9b81-4197-ad80-8c52fd811ace height="400"/>
