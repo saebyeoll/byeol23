@@ -30,7 +30,8 @@ JSON 웹 토큰(JWT) 기반 인증<br>
 
 캘린더 연동
 
-<h1>username == "test" && password == "1234" // 임시로 설정한 아이디 비번</h1>
+<h1>username == "test" && password == "1234" // 임시로 설정한 아이디 비번=>로그인 로직 DB연동</h1>
+
 <h2>디자인 수정 필요</h2>
 파일 목록<br>
 <image src="https://github.com/user-attachments/assets/3784ea8e-dea9-4638-aaa9-f631d8becf7d" height="400"/>
