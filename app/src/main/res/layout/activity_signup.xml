@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 회원가입 화면 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 아이디 입력 필드 -->
+    <EditText
+        android:id="@+id/id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ID"
+        android:inputType="text" />
+
+    <!-- 이름 입력 필드 -->
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name" />
+
+    <!-- 비밀번호 입력 필드 -->
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <!-- 역할 선택 필드 -->
+    <RadioGroup
+        android:id="@+id/role_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/employee_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Employee"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/employer_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Employer" />
+    </RadioGroup>
+
+    <!-- 회원가입 버튼 -->
+    <Button
+        android:id="@+id/signup_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="회원가입" />
+</LinearLayout>
