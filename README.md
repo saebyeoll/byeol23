@@ -28,8 +28,8 @@ JSON 웹 토큰(JWT) 기반 인증
 
 <h1>username == "test" && password == "1234" // 임시로 설정한 아이디 비번</h1>
 <h2>디자인 수정 필요</h2>
-1.로고 화면
+1.로고 화면<br>
 
-<image src="https://github.com/user-attachments/assets/456be02b-ac26-4b59-a452-c8d7aff00a79" width="200" height="400"/>
+<image src="https://github.com/user-attachments/assets/456be02b-ac26-4b59-a452-c8d7aff00a79"  height="300"/>
 
 
