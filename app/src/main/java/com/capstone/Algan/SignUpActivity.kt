@@ -44,7 +44,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp(id: String, username: String, password: String, role: String): Boolean {
-        // TODO: 회원가입 처리 로직 구현 (예: 서버와 연동)
+        // TODO: 회원가입 처리 로직 구현 (서버와 연동 + DB 구현)
         // 임시로 가입 성공을 반환
         return true
     }
