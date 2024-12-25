@@ -41,7 +41,7 @@ JSON 웹 토큰(JWT) 기반 인증<br>
 1.로고 화면(앱 실행시 맨 처음에 나오는 화면)<br>
 2.로그인 화면(로고 뒤에)<br>
 3.메인 화면(로그인 후)<br>
-<image src="https://github.com/user-attachments/assets/456be02b-ac26-4b59-a452-c8d7aff00a79"  height="400"/>
+<image src="https://github.com/user-attachments/assets/69781f0b-7455-4130-a052-4f7c3d09d3da"  height="400"/>
 
 <image src="https://github.com/user-attachments/assets/522d355c-1ec6-4f46-9789-7311ea1acca9"  height="400"/>
 
