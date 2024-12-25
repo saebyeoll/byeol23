@@ -6,6 +6,7 @@ class UserService {
     private val users = mutableListOf<User>()
     // 초대 코드 목록
     private val invitationCodes = mutableListOf<InvitationCode>()
+
     // 초대 코드 유효성 검사
     fun validateInvitationCode(code: String): Boolean {
         // 주어진 초대 코드와 일치하는 초대 코드 찾기
@@ -18,12 +19,30 @@ class UserService {
             throw IllegalArgumentException("Invalid or expired invitation code")
         }
     }
+
     // 사용자 등록 함수
-    fun registerUser(username: String, password: String, role: String, invitationCode: String) {
+    fun registerUser(
+        id: Int,
+        username: String,
+        password: String,
+        role: String,
+        phone: String,
+        email: String,
+        companyName: String? = null, // 회사 이름은 사업주만 필요
+        invitationCode: String
+    ) {
         // 초대 코드 유효성 검사
         if (validateInvitationCode(invitationCode)) {
-            // 새로운 사용자 객체 생성 (ID는 사용자 목록 크기 + 1)
-            val newUser = User(users.size + 1, username, password, role)
+            // 새로운 사용자 객체 생성
+            val newUser = User(
+                id = id,
+                username = username,
+                password = password,
+                role = role,
+                phone = phone,
+                email = email,
+                companyName = if (role == "사업주") companyName else null
+            )
 
             // 새로운 사용자 목록에 추가
             users.add(newUser)

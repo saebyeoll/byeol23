@@ -1,60 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 회원가입 화면 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/light_background"
     android:padding="16dp">
 
-    <!-- 아이디 입력 필드 -->
-    <EditText
-        android:id="@+id/id"
+    <!-- 상단 Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ID"
-        android:inputType="text" />
+        android:background="@color/light_background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:elevation="4dp">
 
-    <!-- 이름 입력 필드 -->
-    <EditText
-        android:id="@+id/username"
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- 스크롤 가능한 영역 -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Name" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp">
 
-    <!-- 비밀번호 입력 필드 -->
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <!-- 역할 선택 필드 -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="아이디"
+                android:textColorHint="@color/secondary_text"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                android:textColor="@color/primary_text" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="비밀번호"
+                android:inputType="textPassword"
+                android:textColorHint="@color/secondary_text"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                android:textColor="@color/primary_text" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="이름"
+                android:textColorHint="@color/secondary_text"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                android:textColor="@color/primary_text" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="이메일"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/secondary_text"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                android:textColor="@color/primary_text" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="전화번호"
+                android:inputType="phone"
+                android:textColorHint="@color/secondary_text"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                android:textColor="@color/primary_text" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/company_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="회사 이름"
+                android:textColorHint="@color/secondary_text"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                android:textColor="@color/primary_text" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 고정된 하단 영역: 사업주 고용인 라디오 버튼 -->
     <RadioGroup
         android:id="@+id/role_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
 
         <RadioButton
-            android:id="@+id/employee_button"
+            android:id="@+id/employer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Employee"
-            android:checked="true" />
+            android:text="사업주"
+            android:buttonTint="@color/primary_color" />
 
         <RadioButton
-            android:id="@+id/employer_button"
+            android:id="@+id/employee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Employer" />
+            android:text="고용인"
+            android:buttonTint="@color/primary_color"
+            android:layout_marginStart="16dp" />
     </RadioGroup>
 
-    <!-- 회원가입 버튼 -->
-    <Button
+    <!-- 추가된 여백 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/signup_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="회원가입" />
+        android:layout_marginTop="8dp"
+        android:text="회원가입"
+        android:textStyle="bold"
+        android:backgroundTint="@color/pastel_blue"
+        android:textColor="@android:color/white"
+        android:elevation="4dp"
+        app:cornerRadius="8dp" />
 </LinearLayout>
