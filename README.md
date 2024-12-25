@@ -44,5 +44,5 @@ JSON 웹 토큰(JWT) 기반 인증<br>
 
 https://github.com/user-attachments/assets/8d4d53c3-3ab3-4ccc-9d59-2d658472b536
 
+<image src="https://github.com/user-attachments/assets/93d0c251-d76e-4659-a538-c582a28a1f8c"  height="400"/>
 
-<image src="https://github.com/user-attachments/assets/8bbff461-9b81-4197-ad80-8c52fd811ace" height="400"/>
