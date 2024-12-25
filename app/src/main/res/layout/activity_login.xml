@@ -1,59 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 로그인 화면-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
-    <!-- 아이디 -->
-    <EditText
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@color/light_background">
+
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username" />
-    <!-- 비번 -->
-    <EditText
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="Username"
+        android:textColorHint="@color/secondary_text"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/primary_text"
+        android:importantForAccessibility="yes" />
+
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColorHint="@color/secondary_text"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:layout_marginBottom="24dp"
+        android:textColor="@color/primary_text"
+        android:importantForAccessibility="yes" />
 
-    <RadioGroup
-        android:id="@+id/role_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
-        <!-- 근무자 선택 버튼 -->
-        <RadioButton
-            android:id="@+id/employee_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Employee"
-            android:checked="true" />
-
-        <!-- 고용주 선택 버튼 -->
-        <RadioButton
-            android:id="@+id/employer_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Employer" />
-    </RadioGroup>
-
-    <!-- 로그인 버튼 -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="로그인" />
-    <!-- 회원 가입 버튼 -->
-    <Button
+        android:text="로그인"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        style="@style/Widget.MaterialComponents.Button"
+        android:backgroundTint="@color/pastel_blue"
+        app:cornerRadius="8dp"
+        android:elevation="4dp"
+        android:importantForAccessibility="yes"
+        android:contentDescription="Login button"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/signup_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="회원가입"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:strokeColor="@color/pastel_blue"
+        app:strokeWidth="2dp"
+        android:textColor="@color/pastel_blue"
+        app:cornerRadius="8dp"
+        android:elevation="2dp"
+        android:importantForAccessibility="yes"
+        android:contentDescription="Sign up button"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
 </LinearLayout>
