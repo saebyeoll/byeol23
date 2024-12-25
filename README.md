@@ -31,18 +31,18 @@ JSON 웹 토큰(JWT) 기반 인증<br>
 캘린더 연동
 
 <h1>username == "test" && password == "1234" // 임시로 설정한 아이디 비번=>로그인 로직 DB연동</h1>
-초대코드를 어떻게 구현할 것인가..<br>
 
 
 <h2>디자인 수정 필요</h2>
 파일 목록<br>
 <image src="https://github.com/user-attachments/assets/3784ea8e-dea9-4638-aaa9-f631d8becf7d" height="400"/>
 
-1.로고 화면(앱 실행시 맨 처음에 나오는 화면)<br>
-2.로그인 화면(로고 뒤에)<br>
-3.메인 화면(로그인 후)<br>
-<image src="https://github.com/user-attachments/assets/456be02b-ac26-4b59-a452-c8d7aff00a79"  height="400"/>
+1.로고 화면(앱 실행시 맨 처음에 나오는 화면)activity_logo.xml<br> 
+2.로그인 화면(로고 뒤에)activity_login.xml<br>
+3.메인 화면(로그인 후)activity_signup.xml<br>
+<image src="https://github.com/user-attachments/assets/69781f0b-7455-4130-a052-4f7c3d09d3da"  height="400"/>
 
-<image src="https://github.com/user-attachments/assets/522d355c-1ec6-4f46-9789-7311ea1acca9"  height="400"/>
+https://github.com/user-attachments/assets/8d4d53c3-3ab3-4ccc-9d59-2d658472b536
+
 
 <image src="https://github.com/user-attachments/assets/8bbff461-9b81-4197-ad80-8c52fd811ace" height="400"/>
