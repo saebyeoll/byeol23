@@ -38,9 +38,9 @@ JSON 웹 토큰(JWT) 기반 인증<br>
 파일 목록<br>
 <image src="https://github.com/user-attachments/assets/3784ea8e-dea9-4638-aaa9-f631d8becf7d" height="400"/>
 
-1.로고 화면(앱 실행시 맨 처음에 나오는 화면)<br>
-2.로그인 화면(로고 뒤에)<br>
-3.메인 화면(로그인 후)<br>
+1.로고 화면(앱 실행시 맨 처음에 나오는 화면)activity_logo.xml<br> 
+2.로그인 화면(로고 뒤에)activity_login.xml<br>
+3.메인 화면(로그인 후)activity_signup.xml<br>
 <image src="https://github.com/user-attachments/assets/69781f0b-7455-4130-a052-4f7c3d09d3da"  height="400"/>
 
 https://github.com/user-attachments/assets/8d4d53c3-3ab3-4ccc-9d59-2d658472b536
