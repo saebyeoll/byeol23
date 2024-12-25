@@ -16,7 +16,7 @@ class LoginActivity : AppCompatActivity() {
         val usernameField = findViewById<EditText>(R.id.username)
         val passwordField = findViewById<EditText>(R.id.password)
         val loginButton = findViewById<Button>(R.id.login_button)
-        val signupButton = findViewById<Button>(R.id.signup_button) // 회원가입 버튼 추가
+        val signupButton = findViewById<Button>(R.id.signup_button)
 
         loginButton.setOnClickListener {
             val username = usernameField.text.toString()

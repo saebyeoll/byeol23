@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/fragment_home"
+        android:id="@+id/fragment_salary"
         android:title="급여"
         android:icon="@drawable/baseline_edit_calendar_24"/>
     <item
-        android:id="@+id/fragment_search"
+        android:id="@+id/fragment_noticeboard"
         android:title="게시판"
         android:icon="@drawable/baseline_edit_calendar_24"/>
     <item
-        android:id="@+id/fragment_favorite"
+        android:id="@+id/fragment_checklist"
         android:title="체크리스트"
         android:icon="@drawable/baseline_edit_calendar_24"/>
     <item
-        android:id="@+id/fragment_settings"
+        android:id="@+id/fragment_workrecord"
         android:title="출퇴근기록"
         android:icon="@drawable/baseline_edit_calendar_24"/>
 </menu>
