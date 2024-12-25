@@ -12,6 +12,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        // ActionBar 숨기기
+        supportActionBar?.hide()
 
         val usernameField = findViewById<EditText>(R.id.username)
         val passwordField = findViewById<EditText>(R.id.password)
@@ -26,15 +28,15 @@ class LoginActivity : AppCompatActivity() {
                 // 로그인 처리 로직 호출
                 val success = login(username, password)
                 if (success) {
-                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "로그인 성공~~!", Toast.LENGTH_SHORT).show()
                     // 로그인 성공 후 MainActivity로 이동
                     startActivity(Intent(this, MainActivity::class.java))
                     finish() // 로그인 화면 종료
                 } else {
-                    Toast.makeText(this, "Login failed!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "로그인 실패~~!", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "모든 필드를 입력하세요", Toast.LENGTH_SHORT).show()
             }
         }
 

@@ -11,6 +11,8 @@ class LogoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logo)
+        // ActionBar 숨기기
+        supportActionBar?.hide()
 
         // 1초 후 LoginActivity로 이동
         Handler(Looper.getMainLooper()).postDelayed({
