@@ -43,9 +43,7 @@ JSON 웹 토큰(JWT) 기반 인증<br>
 3.메인 화면(로그인 후)<br>
 <image src="https://github.com/user-attachments/assets/69781f0b-7455-4130-a052-4f7c3d09d3da"  height="400"/>
 
-
-<image src="https://github.com/user-attachments/assets/8d4d53c3-3ab3-4ccc-9d59-2d658472b536"  height="400"/>
-
+https://github.com/user-attachments/assets/8d4d53c3-3ab3-4ccc-9d59-2d658472b536
 
 
 <image src="https://github.com/user-attachments/assets/8bbff461-9b81-4197-ad80-8c52fd811ace" height="400"/>
