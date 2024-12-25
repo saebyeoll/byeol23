@@ -39,7 +39,8 @@ JSON 웹 토큰(JWT) 기반 인증<br>
 
 1.로고 화면(앱 실행시 맨 처음에 나오는 화면)activity_logo.xml<br> 
 2.로그인 화면(로고 뒤에)activity_login.xml<br>
-3.메인 화면(로그인 후)activity_signup.xml<br>
+3.회원가입 화면activity_signup.xml<br>
+4.메인 화면(로그인 뒤에)activity_main.xml<br> 급여 게시판 체크리스트 출퇴근은 프래그먼트로 생성
 <image src="https://github.com/user-attachments/assets/69781f0b-7455-4130-a052-4f7c3d09d3da"  height="400"/>
 
 https://github.com/user-attachments/assets/8d4d53c3-3ab3-4ccc-9d59-2d658472b536
