@@ -1,17 +1,22 @@
 package com.capstone.Algan
 
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
+    private var backPressedTime: Long = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // ActionBar 숨기기
         supportActionBar?.hide()
+
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
 
         // 기본 화면으로 급여 화면을 설정
@@ -45,7 +50,24 @@ class MainActivity : AppCompatActivity() {
     private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.main_container, fragment)
-        transaction.addToBackStack(null) // 뒤로가기 기능
         transaction.commit()
+    }
+
+    // 뒤로가기 버튼 동작
+    override fun onBackPressed() {
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - backPressedTime < 2000) {
+            super.onBackPressed() // 2초 안에 뒤로가기를 다시 누르면 앱 종료
+            return
+        }
+
+        AlertDialog.Builder(this).apply {
+            setTitle("앱 종료")
+            setMessage("앱을 종료하시겠습니까?")
+            setPositiveButton("예") { _, _ -> finish() }
+            setNegativeButton("아니요", null)
+            show()
+        }
+        backPressedTime = currentTime
     }
 }
