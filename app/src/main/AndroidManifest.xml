@@ -30,6 +30,9 @@
 
         <!-- MainActivity  -->
         <activity android:name=".MainActivity" />
+
+        <!-- InfoActivity  -->
+        <activity android:name=".InfoActivity" />
     </application>
 
 </manifest>

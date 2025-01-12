@@ -10,16 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- 체크리스트 제목 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="체크리스트"
-            android:textSize="24sp"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="16dp"/>
-
-        <!-- 근로자 선택 -->
+        <!-- 근로자 리스트 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,54 +19,71 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="8dp"/>
 
-        <Spinner
-            android:id="@+id/spinnerEmployees"
+        <ListView
+            android:id="@+id/listViewEmployees"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="0.5dp"/>
 
-        <!-- 항목 내용 입력 -->
+        <!-- 날짜 및 시간 선택 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="내용 입력"
+            android:text="날짜 및 시간 선택"
             android:textSize="18sp"
             android:textColor="@android:color/black"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"/>
 
-        <EditText
-            android:id="@+id/editTextItemContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="항목 내용"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp"/>
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        <!-- 항목 추가 버튼 -->
-        <Button
-            android:id="@+id/button_addItem"
-            android:layout_width="match_parent"
+        <TimePicker
+            android:id="@+id/timePicker"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="항목 추가"
+            android:timePickerMode="spinner"
+            android:layout_marginTop="8dp"/>
+
+        <!-- 대타 요청 버튼 -->
+        <Button
+            android:id="@+id/button_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="대타 요청"
             android:textColor="@android:color/white"
             android:background="@android:color/black"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginTop="16dp"/>
 
-        <!-- 추가된 항목 리스트 -->
+        <!-- 대타 요청 목록 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="추가된 항목"
+            android:text="대타 요청 목록"
             android:textSize="18sp"
             android:textColor="@android:color/black"
+            android:layout_marginTop="32dp"
             android:layout_marginBottom="8dp"/>
 
         <ListView
-            android:id="@+id/listViewItems"
+            android:id="@+id/listViewRequests"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@android:color/darker_gray"
             android:dividerHeight="0.5dp"/>
+
+        <!-- 승인 버튼 (사업주용) -->
+        <Button
+            android:id="@+id/button_approve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="승인"
+            android:textColor="@android:color/white"
+            android:background="@android:color/black"
+            android:layout_marginTop="16dp"/>
 
     </LinearLayout>
 </ScrollView>

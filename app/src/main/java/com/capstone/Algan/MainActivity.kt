@@ -1,10 +1,12 @@
 package com.capstone.Algan
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.capstone.Algan.fragments.NoticeBoardFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -16,7 +18,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         // ActionBar 숨기기
         supportActionBar?.hide()
+// 툴바 설정
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
 
+        // 툴바 메뉴 클릭 이벤트
+        toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.menu_info -> {
+                    // 내정보 화면으로 이동
+                    val intent = Intent(this, InfoActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
 
         // 기본 화면으로 급여 화면을 설정
