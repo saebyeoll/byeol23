@@ -10,80 +10,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- 근로자 리스트 -->
+        <!-- 대타 캘린더 화면 텍스트 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="근로자 선택"
-            android:textSize="18sp"
+            android:text="대타 캘린더 화면"
+            android:textSize="28sp"
             android:textColor="@android:color/black"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="16dp"/>
 
-        <ListView
-            android:id="@+id/listViewEmployees"
+        <!-- CalendarView 캘린더 -->
+        <CalendarView
+            android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@android:color/darker_gray"
-            android:dividerHeight="0.5dp"/>
-
-        <!-- 날짜 및 시간 선택 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="날짜 및 시간 선택"
-            android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"/>
-
-        <DatePicker
-            android:id="@+id/datePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TimePicker
-            android:id="@+id/timePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:timePickerMode="spinner"
-            android:layout_marginTop="8dp"/>
-
-        <!-- 대타 요청 버튼 -->
-        <Button
-            android:id="@+id/button_request"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="대타 요청"
-            android:textColor="@android:color/white"
-            android:background="@android:color/black"
-            android:layout_marginTop="16dp"/>
-
-        <!-- 대타 요청 목록 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="대타 요청 목록"
-            android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="8dp"/>
-
-        <ListView
-            android:id="@+id/listViewRequests"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@android:color/darker_gray"
-            android:dividerHeight="0.5dp"/>
-
-        <!-- 승인 버튼 (사업주용) -->
-        <Button
-            android:id="@+id/button_approve"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="승인"
-            android:textColor="@android:color/white"
-            android:background="@android:color/black"
-            android:layout_marginTop="16dp"/>
+            android:showWeekNumber="false"
+            android:firstDayOfWeek="1"
+            android:dateTextAppearance="@android:style/TextAppearance.Medium"
+            android:weekDayTextAppearance="@android:style/TextAppearance.Small"/>
 
     </LinearLayout>
 </ScrollView>

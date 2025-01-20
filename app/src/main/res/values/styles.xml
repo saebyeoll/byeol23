@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><style name="CustomDatePickerTheme" parent="Theme.MaterialComponents.DayNight">
+    <!-- 주요 색상 설정 -->
+    <item name="colorPrimary">@color/primary_color</item>
+    <item name="colorPrimaryVariant">@color/primary_color</item>
+    <item name="colorOnPrimary">@color/white</item>
+
+    <!-- 캘린더 다이얼로그 스타일 -->
+    <item name="materialCalendarStyle">@style/Widget.MaterialComponents.MaterialCalendar</item>
+    <item name="materialCalendarTheme">@style/CustomCalendarTheme</item>
+</style>
+
+    <style name="CustomCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <!-- 캘린더 헤더 색상 -->
+        <item name="materialCalendarHeaderBackground">@color/header_background_color</item>
+        <item name="materialCalendarHeaderTextColor">@color/header_text_color</item>
+        <item name="materialCalendarDaySelectedBackground">@color/selected_day_background</item>
+        <item name="materialCalendarDaySelectedTextColor">@color/selected_day_text</item>
+    </style>
+</resources>
