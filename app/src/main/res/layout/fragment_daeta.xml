@@ -22,15 +22,31 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="16dp" />
 
-        <!-- 대타 신청 리스트 -->
-        <ListView
-            android:id="@+id/listViewSubstituteRequests"
+        <!-- 대타 신청 리스트와 대타 요청이 없을 때 메시지 -->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:divider="@android:color/darker_gray"
-            android:dividerHeight="1dp"
-            android:background="@android:color/white" />
+            android:layout_height="300dp">
+
+            <!-- 대타 신청 리스트 -->
+            <ListView
+                android:id="@+id/listViewSubstituteRequests"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@android:color/darker_gray"
+                android:dividerHeight="1dp"
+                android:background="@android:color/white" />
+
+            <!-- 대타 요청이 없을 경우 메시지 -->
+            <TextView
+                android:id="@+id/textNoRequests"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="대타 요청이 없습니다."
+                android:textSize="16sp"
+                android:textColor="@android:color/darker_gray"
+                android:gravity="center"
+                android:visibility="gone" />
+        </RelativeLayout>
 
         <!-- 대타 신청 버튼 -->
         <Button
