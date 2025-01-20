@@ -7,27 +7,32 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/light_background">
 
-        <!-- 대타 캘린더 화면 텍스트 -->
+        <!-- 화면 제목 -->
         <TextView
+            android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="대타 캘린더 화면"
-            android:textSize="28sp"
+            android:text="대타 신청 화면"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp" />
 
-        <!-- CalendarView 캘린더 -->
-        <CalendarView
-            android:id="@+id/calendarView"
+        <!-- 대타 신청 리스트 -->
+        <ListView
+            android:id="@+id/listViewSubstituteRequests"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:showWeekNumber="false"
-            android:firstDayOfWeek="1"
-            android:dateTextAppearance="@android:style/TextAppearance.Medium"
-            android:weekDayTextAppearance="@android:style/TextAppearance.Small"/>
+            android:layout_height="match_parent"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp"
+            android:background="@android:color/white" />
 
     </LinearLayout>
 </ScrollView>
+
+
