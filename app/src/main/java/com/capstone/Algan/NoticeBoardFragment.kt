@@ -80,7 +80,7 @@ class NoticeBoardFragment : Fragment() {
         private fun showDatePicker() {
             // MaterialDatePicker를 사용하여 날짜 선택
             val datePicker = com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker()
-                .setTitleText("날짜를 선택하세요")
+                .setTitleText("대타를 신청할 날짜를 선택하세요")
                 .build()
 
             datePicker.addOnPositiveButtonClickListener { selection ->
@@ -92,23 +92,42 @@ class NoticeBoardFragment : Fragment() {
         }
 
         private fun showTimePicker(selectedDate: String) {
-            // TimePickerDialog를 사용하여 시간 선택
+            // 현재 시간을 가져옵니다.
             val currentTime = java.util.Calendar.getInstance()
             val hour = currentTime.get(java.util.Calendar.HOUR_OF_DAY)
             val minute = currentTime.get(java.util.Calendar.MINUTE)
 
-            val timePicker = android.app.TimePickerDialog(
+            // 시작 시간 선택
+            val startTimePicker = android.app.TimePickerDialog(
                 requireContext(),
-                { _, selectedHour, selectedMinute ->
-                    val time = String.format("%02d:%02d", selectedHour, selectedMinute)
-                    addToSubstituteList("$selectedDate $time")
+                { _, startHour, startMinute ->
+                    val startTime = String.format("%02d:%02d", startHour, startMinute)
+
+                    // 종료 시간 선택
+                    val endTimePicker = android.app.TimePickerDialog(
+                        requireContext(),
+                        { _, endHour, endMinute ->
+                            val endTime = String.format("%02d:%02d", endHour, endMinute)
+
+                            // 선택된 시간 범위를 리스트에 추가
+                            val timeRange = "$selectedDate $startTime ~ $endTime"
+                            addToSubstituteList(timeRange)
+                        },
+                        hour,
+                        minute,
+                        true
+                    )
+                    endTimePicker.setTitle("종료 시간을 선택하세요")
+                    endTimePicker.show()
                 },
                 hour,
                 minute,
                 true
             )
-            timePicker.show()
+            startTimePicker.setTitle("시작 시간을 선택하세요")
+            startTimePicker.show()
         }
+
 
         private fun addToSubstituteList(request: String) {
             // 선택된 날짜 및 시간을 리스트에 추가
