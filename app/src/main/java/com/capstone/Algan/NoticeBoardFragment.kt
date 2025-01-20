@@ -71,6 +71,7 @@ class NoticeBoardFragment : Fragment() {
         )
 
         private val substituteList = mutableListOf<SubstituteRequest>()
+        private var filteredSubstituteList = mutableListOf<SubstituteRequest>()
         private lateinit var adapter: ArrayAdapter<SubstituteRequest>
 
         override fun onCreateView(
@@ -83,18 +84,18 @@ class NoticeBoardFragment : Fragment() {
             val noRequestsTextView = view.findViewById<TextView>(R.id.textNoRequests)
 
             // Adapter 초기화
-            adapter = object : ArrayAdapter<SubstituteRequest>(requireContext(), R.layout.item_substitute_request, substituteList) {
+            adapter = object : ArrayAdapter<SubstituteRequest>(requireContext(), R.layout.item_substitute_request, filteredSubstituteList) {
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                     val itemView = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_substitute_request, parent, false)
 
                     val substituteTimeTextView = itemView.findViewById<TextView>(R.id.textViewSubstituteTime)
-                    substituteTimeTextView.text = substituteList[position].timeRange
+                    substituteTimeTextView.text = filteredSubstituteList[position].timeRange
 
                     val requesterNameTextView = itemView.findViewById<TextView>(R.id.textViewRequesterName)
-                    requesterNameTextView.text = substituteList[position].requesterName
+                    requesterNameTextView.text = filteredSubstituteList[position].requesterName
 
                     val acceptedByTextView = itemView.findViewById<TextView>(R.id.textViewAcceptedBy)
-                    val acceptedBy = substituteList[position].acceptedBy
+                    val acceptedBy = filteredSubstituteList[position].acceptedBy
                     acceptedByTextView.text = if (acceptedBy != null) "수락자: $acceptedBy" else ""
 
                     val acceptButton = itemView.findViewById<Button>(R.id.buttonAccept)
@@ -104,7 +105,7 @@ class NoticeBoardFragment : Fragment() {
                     acceptButton.setBackgroundColor(resources.getColor(R.color.pastel_blue))
 
                     // 승인 버튼 초기 색상 설정
-                    if (substituteList[position].isApproved) {
+                    if (filteredSubstituteList[position].isApproved) {
                         approveButton.setBackgroundColor(resources.getColor(android.R.color.holo_green_dark))
                         approveButton.isEnabled = false // 승인된 후 버튼 비활성화
                     } else {
@@ -134,11 +135,25 @@ class NoticeBoardFragment : Fragment() {
                 showDatePicker()
             }
 
+            // "나의 대타 요청 내역" 버튼 클릭 리스너
+            val buttonMySubstituteRequest = view.findViewById<Button>(R.id.buttonMySubstituteRequest)
+            buttonMySubstituteRequest.setOnClickListener {
+                filterSubstituteRequests(isRequest = true) // 내가 요청한 대타만 필터링
+                updateRequestsView(noRequestsTextView, listView)
+            }
+
+            // "나의 수락 내역" 버튼 클릭 리스너
+            val buttonMySubstituteAccept = view.findViewById<Button>(R.id.buttonMySubstituteAccept)
+            buttonMySubstituteAccept.setOnClickListener {
+                filterSubstituteRequests(isRequest = false) // 내가 수락한 대타만 필터링
+                updateRequestsView(noRequestsTextView, listView)
+            }
+
             return view
         }
 
         private fun updateRequestsView(noRequestsTextView: TextView, listView: ListView) {
-            if (substituteList.isEmpty()) {
+            if (filteredSubstituteList.isEmpty()) {
                 listView.visibility = View.GONE
                 noRequestsTextView.visibility = View.VISIBLE
             } else {
@@ -225,32 +240,46 @@ class NoticeBoardFragment : Fragment() {
 
         private fun addToSubstituteList(request: SubstituteRequest) {
             substituteList.add(request)
+            filterSubstituteRequests(isRequest = true) // 내가 요청한 대타만 필터링
+            val listView = view?.findViewById<ListView>(R.id.listViewSubstituteRequests)
+            val noRequestsTextView = view?.findViewById<TextView>(R.id.textNoRequests)
+            updateRequestsView(noRequestsTextView ?: return, listView ?: return)
+        }
+
+        private fun filterSubstituteRequests(isRequest: Boolean) {
+            filteredSubstituteList = if (isRequest) {
+                // 내가 요청한 대타 요청만 필터링
+                substituteList.filter { it.requesterName == getRequesterName() }.toMutableList()
+            } else {
+                // 내가 수락한 대타 요청만 필터링
+                substituteList.filter { it.acceptedBy == getRequesterName() }.toMutableList()
+            }
+
+            // 필터링된 목록을 adapter에 반영하여 ListView 갱신
+            adapter.clear()
+            adapter.addAll(filteredSubstituteList)
             adapter.notifyDataSetChanged()
 
             val listView = view?.findViewById<ListView>(R.id.listViewSubstituteRequests)
             val noRequestsTextView = view?.findViewById<TextView>(R.id.textNoRequests)
-
             updateRequestsView(noRequestsTextView ?: return, listView ?: return)
         }
 
         private fun handleAcceptRequest(position: Int) {
             val requesterName = getRequesterName()
-            substituteList[position].acceptedBy = requesterName
+            filteredSubstituteList[position].acceptedBy = requesterName
+            filteredSubstituteList[position].isApproved = false // 수락 후 승인 대기 상태로 변경
             adapter.notifyDataSetChanged()
-
-            Toast.makeText(requireContext(), "대타 신청 수락: ${substituteList[position].timeRange}", Toast.LENGTH_SHORT).show()
         }
 
         private fun handleApproveRequest(position: Int, approveButton: Button) {
-            substituteList[position].isApproved = true
-            adapter.notifyDataSetChanged()
-
-            // 버튼 색상 변경
+            filteredSubstituteList[position].isApproved = true
             approveButton.setBackgroundColor(resources.getColor(android.R.color.holo_green_dark))
-
-            Toast.makeText(requireContext(), "대타 신청 승인: ${substituteList[position].timeRange}", Toast.LENGTH_SHORT).show()
+            approveButton.isEnabled = false // 승인 후 버튼 비활성화
+            adapter.notifyDataSetChanged()
         }
     }
+
 
 
 
