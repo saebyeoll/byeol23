@@ -2,35 +2,94 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:gravity="center">
 
     <!-- 시작 시간 선택 -->
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="시작 시간"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="8dp"/>
+        android:orientation="vertical"
+        android:layout_marginEnd="32dp">
 
-    <TimePicker
-        android:id="@+id/startTimePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="출근 시간"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <NumberPicker
+                android:id="@+id/startHourPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:value="9" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@android:color/black" />
+
+            <NumberPicker
+                android:id="@+id/startMinutePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:value="0" />
+        </LinearLayout>
+    </LinearLayout>
 
     <!-- 종료 시간 선택 -->
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="종료 시간"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"/>
+        android:orientation="vertical">
 
-    <TimePicker
-        android:id="@+id/endTimePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="퇴근 시간"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <NumberPicker
+                android:id="@+id/endHourPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:value="10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@android:color/black" />
+
+            <NumberPicker
+                android:id="@+id/endMinutePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:value="0" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
