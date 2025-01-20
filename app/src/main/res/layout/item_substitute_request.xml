@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,14 +21,23 @@
             android:textSize="16sp"
             android:textColor="@android:color/black" />
 
-        <!-- 요청자의 이름 표시 -->
+        <!-- 요청자 이름 -->
         <TextView
             android:id="@+id/textViewRequesterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="요청자 이름"
+            android:text="요청자: 김영희"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@android:color/black" />
+
+        <!-- 수락자 이름 (수락된 경우 표시됨) -->
+        <TextView
+            android:id="@+id/textViewAcceptedBy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수락자: 김철수"
+            android:textSize="14sp"
+            android:textColor="@android:color/black" />
     </LinearLayout>
 
     <!-- 승인 버튼 -->
