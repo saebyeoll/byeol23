@@ -54,14 +54,70 @@ class NoticeBoardFragment : Fragment() {
     // 대타 화면 프래그먼트
     class DaeTaFragment : Fragment() {
 
+        private val substituteList = mutableListOf<String>()
+        private lateinit var adapter: ArrayAdapter<String>
+
         override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            // 대타 화면 XML을 연결합니다
-            return inflater.inflate(R.layout.fragment_daeta, container, false)
+            val view = inflater.inflate(R.layout.fragment_daeta, container, false)
+
+            // ListView 초기화
+            val listView = view.findViewById<android.widget.ListView>(R.id.listViewSubstituteRequests)
+            adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, substituteList)
+            listView.adapter = adapter
+
+            // 대타 신청 버튼 클릭 이벤트 설정
+            val buttonRequestSubstitute = view.findViewById<View>(R.id.buttonRequestSubstitute)
+            buttonRequestSubstitute.setOnClickListener {
+                showDatePicker()
+            }
+
+            return view
+        }
+
+        private fun showDatePicker() {
+            // MaterialDatePicker를 사용하여 날짜 선택
+            val datePicker = com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker()
+                .setTitleText("날짜를 선택하세요")
+                .build()
+
+            datePicker.addOnPositiveButtonClickListener { selection ->
+                val selectedDate = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date(selection))
+                showTimePicker(selectedDate)
+            }
+
+            datePicker.show(childFragmentManager, "DATE_PICKER")
+        }
+
+        private fun showTimePicker(selectedDate: String) {
+            // TimePickerDialog를 사용하여 시간 선택
+            val currentTime = java.util.Calendar.getInstance()
+            val hour = currentTime.get(java.util.Calendar.HOUR_OF_DAY)
+            val minute = currentTime.get(java.util.Calendar.MINUTE)
+
+            val timePicker = android.app.TimePickerDialog(
+                requireContext(),
+                { _, selectedHour, selectedMinute ->
+                    val time = String.format("%02d:%02d", selectedHour, selectedMinute)
+                    addToSubstituteList("$selectedDate $time")
+                },
+                hour,
+                minute,
+                true
+            )
+            timePicker.show()
+        }
+
+        private fun addToSubstituteList(request: String) {
+            // 선택된 날짜 및 시간을 리스트에 추가
+            substituteList.add(request)
+            adapter.notifyDataSetChanged()
+            android.widget.Toast.makeText(requireContext(), "대타 신청이 추가되었습니다.", android.widget.Toast.LENGTH_SHORT).show()
         }
     }
+
 
     // 공지 화면 프래그먼트
     class NoticeFragment : Fragment() {

@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@color/light_background">
+        android:padding="16dp">
 
         <!-- 화면 제목 -->
         <TextView
@@ -27,12 +26,20 @@
         <ListView
             android:id="@+id/listViewSubstituteRequests"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:divider="@android:color/darker_gray"
             android:dividerHeight="1dp"
             android:background="@android:color/white" />
 
+        <!-- 대타 신청 버튼 -->
+        <Button
+            android:id="@+id/buttonRequestSubstitute"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="대타 신청"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/black"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </ScrollView>
-
-
