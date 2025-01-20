@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp"
+    android:padding="1dp"
     android:background="?android:attr/selectableItemBackground">
 
     <!-- 대타 신청 항목 내용 -->
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2025-01-20 09:00 ~ 10:00"
-            android:textSize="16sp"
+            android:textSize="11sp"
             android:textColor="@android:color/black" />
 
         <!-- 요청자 이름 -->
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="요청자: 김영희"
-            android:textSize="14sp"
+            android:textSize="9sp"
             android:textColor="@android:color/black" />
 
         <!-- 수락자 이름 (수락된 경우 표시됨) -->
@@ -36,22 +36,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="수락자: 김철수"
-            android:textSize="14sp"
+            android:textSize="9sp"
             android:textColor="@android:color/black" />
     </LinearLayout>
 
-    <!-- 승인 버튼 -->
-    <Button
-        android:id="@+id/buttonAccept"
+    <!-- 버튼들: 수락 및 승인 -->
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="수락"
-        android:layout_marginEnd="8dp"/>
+        android:gravity="center">
 
-    <!-- 수락 버튼 -->
-    <Button
-        android:id="@+id/buttonApprove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="승인" />
+        <!-- 수락 버튼 -->
+        <Button
+            android:id="@+id/buttonAccept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수락"
+            android:textSize="9sp"
+            android:minWidth="55dp"
+            android:minHeight="25dp"/>
+
+        <!-- 승인 버튼 -->
+        <Button
+            android:id="@+id/buttonApprove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="승인"
+            android:textSize="9sp"
+            android:minWidth="55dp"
+            android:minHeight="25dp"/>
+    </LinearLayout>
 </LinearLayout>

@@ -58,13 +58,16 @@ class NoticeBoardFragment : Fragment() {
         return view
     }
 
+
+
+    // 대타 화면 프래그먼트
     class DaeTaFragment : Fragment() {
 
-        // SubstituteRequest 데이터 클래스 정의
         data class SubstituteRequest(
-            val timeRange: String, // 대타 신청 시간
-            val requesterName: String, // 대타 신청자 이름
-            var acceptedBy: String? = null // 수락한 사람의 이름 (없으면 null)
+            val timeRange: String,
+            val requesterName: String,
+            var acceptedBy: String? = null,
+            var isApproved: Boolean = false
         )
 
         private val substituteList = mutableListOf<SubstituteRequest>()
@@ -76,40 +79,47 @@ class NoticeBoardFragment : Fragment() {
         ): View? {
             val view = inflater.inflate(R.layout.fragment_daeta, container, false)
 
-            // ListView 초기화
             val listView = view.findViewById<ListView>(R.id.listViewSubstituteRequests)
+            val noRequestsTextView = view.findViewById<TextView>(R.id.textNoRequests)
 
-            // ListView에 사용할 Adapter 커스터마이징
+            // Adapter 초기화
             adapter = object : ArrayAdapter<SubstituteRequest>(requireContext(), R.layout.item_substitute_request, substituteList) {
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                     val itemView = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_substitute_request, parent, false)
 
-                    // 데이터 바인딩
                     val substituteTimeTextView = itemView.findViewById<TextView>(R.id.textViewSubstituteTime)
                     substituteTimeTextView.text = substituteList[position].timeRange
 
-                    // 요청자 이름 설정
                     val requesterNameTextView = itemView.findViewById<TextView>(R.id.textViewRequesterName)
                     requesterNameTextView.text = substituteList[position].requesterName
 
-                    // 수락한 사람의 이름 표시
                     val acceptedByTextView = itemView.findViewById<TextView>(R.id.textViewAcceptedBy)
                     val acceptedBy = substituteList[position].acceptedBy
                     acceptedByTextView.text = if (acceptedBy != null) "수락자: $acceptedBy" else ""
 
-                    // 버튼 설정
                     val acceptButton = itemView.findViewById<Button>(R.id.buttonAccept)
                     val approveButton = itemView.findViewById<Button>(R.id.buttonApprove)
 
-                    // 수락 버튼 클릭 시 처리
-                    acceptButton.setOnClickListener {
-                        handleAcceptRequest(position)
+                    // 수락 버튼 초기 색상 설정
+                    acceptButton.setBackgroundColor(resources.getColor(R.color.pastel_blue))
+
+                    // 승인 버튼 초기 색상 설정
+                    if (substituteList[position].isApproved) {
+                        approveButton.setBackgroundColor(resources.getColor(android.R.color.holo_green_dark))
+                        approveButton.isEnabled = false // 승인된 후 버튼 비활성화
+                    } else {
+                        approveButton.setBackgroundColor(resources.getColor(android.R.color.holo_red_dark))
                     }
 
-                    // 승인 버튼 클릭 시 처리
-                    approveButton.setOnClickListener {
-                        handleApproveRequest(position)
+                    // 사업주만 승인 버튼을 누를 수 있도록 설정
+                    if (isBusinessOwner()) {
+                        approveButton.isEnabled = true
+                    } else {
+                        approveButton.isEnabled = false
                     }
+
+                    acceptButton.setOnClickListener { handleAcceptRequest(position) }
+                    approveButton.setOnClickListener { handleApproveRequest(position, approveButton) }
 
                     return itemView
                 }
@@ -117,7 +127,8 @@ class NoticeBoardFragment : Fragment() {
 
             listView.adapter = adapter
 
-            // 대타 신청 버튼 클릭 이벤트 설정
+            updateRequestsView(noRequestsTextView, listView)
+
             val buttonRequestSubstitute = view.findViewById<ImageButton>(R.id.buttonRequestSubstitute)
             buttonRequestSubstitute.setOnClickListener {
                 showDatePicker()
@@ -126,14 +137,29 @@ class NoticeBoardFragment : Fragment() {
             return view
         }
 
+        private fun updateRequestsView(noRequestsTextView: TextView, listView: ListView) {
+            if (substituteList.isEmpty()) {
+                listView.visibility = View.GONE
+                noRequestsTextView.visibility = View.VISIBLE
+            } else {
+                listView.visibility = View.VISIBLE
+                noRequestsTextView.visibility = View.GONE
+            }
+        }
+
         private fun getRequesterName(): String {
-            // TODO: DB 연동으로 변경.
             val sharedPreferences = requireContext().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
             return sharedPreferences.getString("사용자이름", "미확인된 사용자") ?: "미확인된 사용자"
         }
 
+        private fun isBusinessOwner(): Boolean {
+            // TODO: 사용자 역할을 DB나 SharedPreferences에서 확인하여 사업주인지 확인
+            val sharedPreferences = requireContext().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
+            val role = sharedPreferences.getString("userRole", "employee") // 예: "employee", "businessOwner"
+            return role == "businessOwner" // 사업주인 경우 true, 아니면 false
+        }
+
         private fun showDatePicker() {
-            // MaterialDatePicker를 사용하여 날짜 선택
             val datePicker = com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker()
                 .setTitleText("대타를 신청할 날짜를 선택하세요")
                 .build()
@@ -148,12 +174,10 @@ class NoticeBoardFragment : Fragment() {
         }
 
         private fun showTimeRangePicker(selectedDate: String) {
-            // 현재 시간
             val currentTime = java.util.Calendar.getInstance()
             val hour = currentTime.get(java.util.Calendar.HOUR_OF_DAY)
             val minute = currentTime.get(java.util.Calendar.MINUTE)
 
-            // 시간 선택을 위한 AlertDialog
             val timePickerView = layoutInflater.inflate(R.layout.dialog_time_picker, null)
 
             val startHourPicker = timePickerView.findViewById<NumberPicker>(R.id.startHourPicker)
@@ -161,14 +185,11 @@ class NoticeBoardFragment : Fragment() {
             val endHourPicker = timePickerView.findViewById<NumberPicker>(R.id.endHourPicker)
             val endMinutePicker = timePickerView.findViewById<NumberPicker>(R.id.endMinutePicker)
 
-            // 기본 시간 설정
             startHourPicker.value = hour
             startMinutePicker.value = minute
-
-            endHourPicker.value = hour + 1 // 기본적으로 종료시간은 1시간 뒤로 설정
+            endHourPicker.value = hour + 1
             endMinutePicker.value = minute
 
-            // NumberPicker 설정
             startHourPicker.minValue = 0
             startHourPicker.maxValue = 23
             startMinutePicker.minValue = 0
@@ -191,9 +212,8 @@ class NoticeBoardFragment : Fragment() {
                     val startTime = String.format("%02d:%02d", startHour, startMinute)
                     val endTime = String.format("%02d:%02d", endHour, endMinute)
 
-                    // 선택된 시간 범위를 SubstituteRequest로 추가
                     val timeRange = "$selectedDate $startTime ~ $endTime"
-                    val requesterName = getRequesterName() // 대타 요청자 이름
+                    val requesterName = getRequesterName()
                     val newRequest = SubstituteRequest(timeRange, requesterName)
                     addToSubstituteList(newRequest)
                 }
@@ -206,23 +226,33 @@ class NoticeBoardFragment : Fragment() {
         private fun addToSubstituteList(request: SubstituteRequest) {
             substituteList.add(request)
             adapter.notifyDataSetChanged()
+
+            val listView = view?.findViewById<ListView>(R.id.listViewSubstituteRequests)
+            val noRequestsTextView = view?.findViewById<TextView>(R.id.textNoRequests)
+
+            updateRequestsView(noRequestsTextView ?: return, listView ?: return)
         }
 
         private fun handleAcceptRequest(position: Int) {
-            // 수락 버튼 클릭 시 수락한 사람의 이름을 해당 대타 요청에 추가
             val requesterName = getRequesterName()
             substituteList[position].acceptedBy = requesterName
             adapter.notifyDataSetChanged()
 
-            // 수락 처리
             Toast.makeText(requireContext(), "대타 신청 수락: ${substituteList[position].timeRange}", Toast.LENGTH_SHORT).show()
         }
 
-        private fun handleApproveRequest(position: Int) {
-            // 승인 버튼 클릭 시 처리
+        private fun handleApproveRequest(position: Int, approveButton: Button) {
+            substituteList[position].isApproved = true
+            adapter.notifyDataSetChanged()
+
+            // 버튼 색상 변경
+            approveButton.setBackgroundColor(resources.getColor(android.R.color.holo_green_dark))
+
             Toast.makeText(requireContext(), "대타 신청 승인: ${substituteList[position].timeRange}", Toast.LENGTH_SHORT).show()
         }
     }
+
+
 
 
 

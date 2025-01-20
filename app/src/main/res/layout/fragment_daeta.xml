@@ -3,19 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="3dp"
     android:background="@color/light_background">
-
-    <!-- 화면 제목 -->
-    <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="대타 신청 화면"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="16dp" />
 
     <!-- 대타 신청 리스트와 대타 요청이 없을 때 메시지 -->
     <RelativeLayout
@@ -44,19 +33,48 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <!-- 대타 신청 이미지 버튼 -->
-    <RelativeLayout
+    <!-- 나의 대타 요청, 나의 대타 수락, 대타 신청 버튼을 한 줄에 배치 -->
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="5dp">
 
+        <!-- 나의 대타 요청 버튼 -->
+        <Button
+            android:id="@+id/buttonMySubstituteRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="대타 요청\n내역"
+            android:textSize="8sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:minWidth="50dp"
+            android:minHeight="25dp"
+            android:layout_marginEnd="5dp" />
+
+        <!-- 나의 대타 수락 버튼 -->
+        <Button
+            android:id="@+id/buttonMySubstituteAccept"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="대타 수락\n내역"
+            android:textSize="8sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:minWidth="50dp"
+            android:minHeight="25dp"
+            android:layout_marginEnd="5dp" />
+
+        <!-- 대타 신청 이미지 버튼 -->
         <ImageButton
             android:id="@+id/buttonRequestSubstitute"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:src="@drawable/baseline_edit_note_24"
             android:contentDescription="대타 신청 버튼"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="16dp" />
-    </RelativeLayout>
+            android:layout_marginStart="0dp" />
+    </LinearLayout>
 
 </LinearLayout>
