@@ -20,18 +20,20 @@ class ChecklistFragment : Fragment() {
     // 사업주 여부 확인 변수 =>(실제 로그인 상태에 맞게 수정해 주세요)
     private val isBusinessOwner = true  // 사업주로 설정한 코드
     //private val isBusinessOwner = false // 사업주가 아닌 코드
-
-    private val employeeList = listOf("근로자 1", "근로자 2", "근로자 3")
-    private val checklistItems = mutableListOf<ChecklistItem>()
-    private lateinit var listViewAdapter: ChecklistAdapter
+    // 근로자 목록 (사례로 "테스트근로자" 추가)
+    private val employeeList = listOf("근로자 1", "근로자 2", "근로자 3","테스트근로자")
 
     // 그룹에 해당하는 근로자 리스트
     private val employeesByGroup = mapOf(
-        "전체" to listOf("근로자 1", "근로자 2", "근로자 3"),
-        "오전" to listOf("근로자 1"),
+        "전체" to listOf("근로자 1", "근로자 2", "근로자 3","테스트근로자"),
+        "오전" to listOf("근로자 1","테스트근로자"),
         "오후" to listOf("근로자 2", "근로자 3")
     )
+    // 로그인한 근로자 정보 (예시: 테스트근로자)
+    private val loggedInUser = Employee("테스트근로자", "오전")
 
+    private val checklistItems = mutableListOf<ChecklistItem>()
+    private lateinit var listViewAdapter: ChecklistAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,12 +54,32 @@ class ChecklistFragment : Fragment() {
             binding.textViewItemContent.visibility = View.GONE
             binding.editTextItemContent.visibility = View.GONE
             binding.buttonAddItem.visibility = View.GONE
+            // 근로자에게는 그룹과 근로자 선택 불가하도록 설정
+            binding.spinnerGroup.isEnabled = false
+            binding.spinnerEmployees.isEnabled = false
+            // 로그인된 근로자 정보에 맞는 근로자만 선택되도록 설정
+            binding.spinnerEmployees.setSelection(employeeList.indexOf(loggedInUser.name))
         }
-
+        val listView = binding.listViewItems
+        listView.post {
+            val screenHeight = resources.displayMetrics.heightPixels
+            val usedHeight = binding.spinnerGroup.height +
+                    binding.spinnerEmployees.height +
+                    binding.textViewItemContent.height +
+                    binding.editTextItemContent.height +
+                    binding.buttonAddItem.height +
+                    binding.textViewItemContent.height
+            val availableHeight = screenHeight - usedHeight
+            listView.layoutParams.height = availableHeight
+            listView.requestLayout()
+        }
         setupGroupSpinner()
         setupEmployeeSpinner()
         setupListView()
         setupAddButton()
+
+        // 근로자일 경우의 테스트 항목(삭제해주세요)(예시로 "test 체크리스트" 추가)
+        addTestChecklistItem()
     }
 
     private fun setupGroupSpinner() {
@@ -79,12 +101,17 @@ class ChecklistFragment : Fragment() {
     }
 
     private fun setupEmployeeSpinner() {
-        binding.spinnerEmployees.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                filterChecklistItems()
-            }
+        if (isBusinessOwner) {
+            binding.spinnerEmployees.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    filterChecklistItems()
+                }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        } else {
+            // 근로자일 경우 본인만 선택 가능하게 함
+            binding.spinnerEmployees.setSelection(employeeList.indexOf(loggedInUser.name))
         }
     }
 
@@ -156,18 +183,34 @@ class ChecklistFragment : Fragment() {
 
         listViewAdapter.notifyDataSetChanged()
     }
-
+    private fun getGroupPosition(group: String): Int {
+        return when (group) {
+            "오전" -> 0
+            "오후" -> 1
+            else -> -1
+        }
+    }
+    private fun addTestChecklistItem() {
+        // 기본 체크리스트 항목 추가 (예: "test 체크리스트")
+        val testItem = ChecklistItem(
+            date = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date()),
+            employeeName = "테스트근로자",  // "테스트근로자"가 포함된 체크리스트 항목
+            content = "test 체크리스트",
+            isCompleted = false
+        )
+        checklistItems.add(testItem)
+        listViewAdapter.notifyDataSetChanged()
+    }
     override fun onResume() {
         super.onResume()
         binding.spinnerGroup.setSelection(0)
         binding.spinnerEmployees.setSelection(0)
         filterChecklistItems()
+        // 체크리스트 갱신
+        listViewAdapter.notifyDataSetChanged()
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    // 근로자 정보 클래스
+    data class Employee(val name: String, val group: String)
 
     data class ChecklistItem(
         val date: String,
@@ -176,6 +219,10 @@ class ChecklistFragment : Fragment() {
         var isCompleted: Boolean,
         var isVisible: Boolean = true
     )
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     inner class ChecklistAdapter(
         private val context: android.content.Context,
