@@ -18,8 +18,8 @@ class ChecklistFragment : Fragment() {
     private val binding get() = _binding!!
 
     // 사업주 여부 확인 변수 =>(실제 로그인 상태에 맞게 수정해 주세요)
-    private val isBusinessOwner = true  // 사업주로 테스트 하기 위한 코드
-    //private val isBusinessOwner = false // 사업주가 아닌 코드
+    //private val isBusinessOwner = true  // 사업주로 테스트 하기 위한 코드
+    private val isBusinessOwner = false // 사업주가 아닌 코드
     // 근로자 목록 (테스트용으로 "테스트근로자" 사용)
     private val employeeList = listOf("근로자 1", "근로자 2", "근로자 3","테스트근로자")
 
@@ -300,7 +300,7 @@ class ChecklistFragment : Fragment() {
             return view
         }
     }
-
+        // 완료 => 미완료 버튼 바꾸는 함수. 알람 로직 추가 필요.
     private fun updateButtonStatus(button: Button, isCompleted: Boolean) {
         val color = if (isCompleted) android.R.color.holo_green_light else android.R.color.holo_orange_light
         val text = if (isCompleted) "완료" else "미완료"
