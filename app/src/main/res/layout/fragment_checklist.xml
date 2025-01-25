@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:layout_marginTop="40dp"
+    android:layout_marginBottom="5dp"
     android:background="@color/light_background">
 
     <LinearLayout
@@ -69,6 +70,7 @@
 
         <!-- 추가된 항목 리스트 -->
         <TextView
+            android:id="@+id/textViewChecklist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="체크리스트"

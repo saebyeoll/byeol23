@@ -18,9 +18,9 @@ class ChecklistFragment : Fragment() {
     private val binding get() = _binding!!
 
     // 사업주 여부 확인 변수 =>(실제 로그인 상태에 맞게 수정해 주세요)
-    private val isBusinessOwner = true  // 사업주로 설정한 코드
+    private val isBusinessOwner = true  // 사업주로 테스트 하기 위한 코드
     //private val isBusinessOwner = false // 사업주가 아닌 코드
-    // 근로자 목록 (사례로 "테스트근로자" 추가)
+    // 근로자 목록 (테스트용으로 "테스트근로자" 사용)
     private val employeeList = listOf("근로자 1", "근로자 2", "근로자 3","테스트근로자")
 
     // 그룹에 해당하는 근로자 리스트
@@ -29,7 +29,7 @@ class ChecklistFragment : Fragment() {
         "오전" to listOf("근로자 1","테스트근로자"),
         "오후" to listOf("근로자 2", "근로자 3")
     )
-    // 로그인한 근로자 정보 (예시: 테스트근로자)
+    // 로그인한 근로자 정보 (테스트용: 테스트근로자, 오전 근무)
     private val loggedInUser = Employee("테스트근로자", "오전")
 
     private val checklistItems = mutableListOf<ChecklistItem>()
@@ -45,34 +45,50 @@ class ChecklistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 사업주일 경우에만 체크리스트 추가 뷰가 보이도록 설정
-        if (isBusinessOwner) {//사업자일 경우
+        // 사업주일 경우에만 체크리스트 추가 뷰가 보이게
+        if (isBusinessOwner) {//사업자일 때
             binding.textViewItemContent.visibility = View.VISIBLE //내용입력 텍스트
             binding.editTextItemContent.visibility = View.VISIBLE //입력 창
             binding.buttonAddItem.visibility = View.VISIBLE // 체크리스트 보내기 버튼
-        } else {//아닐 경우(근로자)
+        } else {//아닐 경우(근로자) 안보이게
             binding.textViewItemContent.visibility = View.GONE
             binding.editTextItemContent.visibility = View.GONE
             binding.buttonAddItem.visibility = View.GONE
-            // 근로자에게는 그룹과 근로자 선택 불가하도록 설정
+            // 근로자는 그룹과 근로자 선택 불가하도록 설정
             binding.spinnerGroup.isEnabled = false
             binding.spinnerEmployees.isEnabled = false
             // 로그인된 근로자 정보에 맞는 근로자만 선택되도록 설정
             binding.spinnerEmployees.setSelection(employeeList.indexOf(loggedInUser.name))
         }
         val listView = binding.listViewItems
-        listView.post {
-            val screenHeight = resources.displayMetrics.heightPixels
-            val usedHeight = binding.spinnerGroup.height +
-                    binding.spinnerEmployees.height +
-                    binding.textViewItemContent.height +
-                    binding.editTextItemContent.height +
-                    binding.buttonAddItem.height +
-                    binding.textViewItemContent.height
-            val availableHeight = screenHeight - usedHeight
-            listView.layoutParams.height = availableHeight
+
+        // ListView 높이를 데이터 개수에 맞게 설정하는 함수
+        fun setListViewHeightBasedOnItems() {
+            val adapter = listView.adapter ?: return
+            var totalHeight = 0
+            for (i in 0 until adapter.count) {
+                val listItem = adapter.getView(i, null, listView)
+                listItem.measure(
+                    View.MeasureSpec.makeMeasureSpec(listView.width, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.UNSPECIFIED
+                )
+                totalHeight += listItem.measuredHeight
+            }
+            val layoutParams = listView.layoutParams
+            layoutParams.height = totalHeight + (listView.dividerHeight * (adapter.count - 1))
+            listView.layoutParams = layoutParams
             listView.requestLayout()
         }
+
+        // 스크롤 뷰의 스크롤 비활성화
+        val scrollView = binding.root as ScrollView
+        scrollView.isVerticalScrollBarEnabled = false
+
+        // 데이터가 변경될 때 높이 재설정
+        listView.viewTreeObserver.addOnGlobalLayoutListener {
+            setListViewHeightBasedOnItems()
+        }
+
         setupGroupSpinner()
         setupEmployeeSpinner()
         setupListView()
@@ -110,7 +126,7 @@ class ChecklistFragment : Fragment() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         } else {
-            // 근로자일 경우 본인만 선택 가능하게 함
+            // 근로자일 경우 본인만 선택 가능하게
             binding.spinnerEmployees.setSelection(employeeList.indexOf(loggedInUser.name))
         }
     }
