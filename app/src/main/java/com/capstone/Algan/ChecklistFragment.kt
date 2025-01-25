@@ -17,7 +17,7 @@ class ChecklistFragment : Fragment() {
     private var _binding: FragmentChecklistBinding? = null
     private val binding get() = _binding!!
 
-    // 사업주 여부 확인 변수 =>(실제 로그인 상태에 맞게 수정해 주세요)
+    // 사업주 여부 확인 변수 =>(실제 로그인 상태에 맞게 Db연결로 수정해 주세요)
     private val isBusinessOwner = true  // 사업주로 테스트 하기 위한 코드
     //private val isBusinessOwner = false // 사업주가 아닌 코드
     // 근로자 목록 (테스트용으로 "테스트근로자" 사용)
@@ -260,6 +260,7 @@ class ChecklistFragment : Fragment() {
             val visibleItems = items.filter { it.isVisible }
             val item = visibleItems[position]
 
+
             val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_checklist, parent, false)
             val tvDate = view.findViewById<TextView>(R.id.tvDate)
             val tvEmployeeName = view.findViewById<TextView>(R.id.tvEmployeeName)
@@ -301,18 +302,21 @@ class ChecklistFragment : Fragment() {
         }
     }
         // 완료 => 미완료 버튼 바꾸는 함수. 알람 로직 추가 필요.
-    private fun updateButtonStatus(button: Button, isCompleted: Boolean) {
-        val color = if (isCompleted) android.R.color.holo_green_light else android.R.color.holo_orange_light
-        val text = if (isCompleted) "완료" else "미완료"
+        private fun updateButtonStatus(button: Button, isCompleted: Boolean) {
+            if (!isAdded) return // 프래그먼트가 유효하지 않으면 리턴
 
-        button.text = text
+            val color = if (isCompleted) android.R.color.holo_green_light else android.R.color.holo_orange_light
+            val text = if (isCompleted) "완료" else "미완료"
 
-        val drawable = GradientDrawable().apply {
-            shape = GradientDrawable.RECTANGLE
-            cornerRadius = 16f
-            setColor(resources.getColor(color, null))
+            button.text = text
+
+            val drawable = GradientDrawable().apply {
+                shape = GradientDrawable.RECTANGLE
+                cornerRadius = 16f
+                setColor(resources.getColor(color, null))
+            }
+
+            button.background = drawable
         }
 
-        button.background = drawable
-    }
 }
