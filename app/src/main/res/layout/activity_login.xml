@@ -9,8 +9,8 @@
     android:padding="16dp"
     android:background="@color/light_background">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/username"
+    <EditText
+        android:id="@+id/emailarea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -23,8 +23,8 @@
         android:textColor="@color/primary_text"
         android:importantForAccessibility="yes" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/password"
+    <EditText
+        android:id="@+id/passwordarea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -38,8 +38,8 @@
         android:textColor="@color/primary_text"
         android:importantForAccessibility="yes" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/login_button"
+    <Button
+        android:id="@+id/loginbtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="로그인"
@@ -55,8 +55,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/signup_button"
+    <Button
+        android:id="@+id/joinbtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="회원가입"

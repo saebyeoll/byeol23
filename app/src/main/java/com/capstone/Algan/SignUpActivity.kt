@@ -1,5 +1,6 @@
 package com.capstone.Algan
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -8,14 +9,22 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+
 class SignUpActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup)
-        // ActionBar 숨기기
-        supportActionBar?.hide()
+        setContentView(R.layout.activity_signup) // XML 파일 연결
 
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+
+        // UI 요소 연결
         val idField = findViewById<EditText>(R.id.id)
         val usernameField = findViewById<EditText>(R.id.username)
         val passwordField = findViewById<EditText>(R.id.password)
@@ -24,46 +33,44 @@ class SignUpActivity : AppCompatActivity() {
         val roleGroup = findViewById<RadioGroup>(R.id.role_group)
         val signupButton = findViewById<Button>(R.id.signup_button)
 
-        // 툴바의 back_button 클릭 리스너 추가
-        val backButton = findViewById<ImageButton>(R.id.back_button)
-        backButton.setOnClickListener {
-            // 이전 화면으로 돌아가기
-            onBackPressed()
-        }
-
         signupButton.setOnClickListener {
             val id = idField.text.toString()
             val username = usernameField.text.toString()
             val password = passwordField.text.toString()
             val email = emailField.text.toString()
             val phone = phoneField.text.toString()
+
+            // 라디오 버튼에서 선택된 역할(role) 가져오기
             val selectedRoleId = roleGroup.checkedRadioButtonId
-            val role = findViewById<RadioButton>(selectedRoleId)?.text.toString()
-
-            // 필드 체크 (빈 값이면 에러 메시지)
-            if (id.isEmpty() || username.isEmpty() || password.isEmpty() || email.isEmpty() || phone.isEmpty() || role.isEmpty()) {
-                Toast.makeText(this, "모든 필드를 입력하세요.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            val role = if (selectedRoleId != -1) {
+                findViewById<RadioButton>(selectedRoleId).text.toString()
+            } else {
+                "일반 사용자"
             }
 
-            try {
-                // 회원가입 처리
-                val success = signUp(id, username, password, role, email, phone)
-                if (success) {
-                    Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
-                    finish()  // 회원가입 후 현재 화면 종료
-                } else {
-                    Toast.makeText(this, "회원가입 실패!", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(this, "오류: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+            signUp(id, username, password, email, phone, role)
         }
     }
 
-    private fun signUp(id: String, username: String, password: String, role: String, email: String, phone: String): Boolean {
-        // 실제 회원가입 처리 로직 구현 (예: 서버와 연동)
-        // 임시로 성공 반환
-        return true
+    private fun signUp(id: String, username: String, password: String, email: String, phone: String, role: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val userId = auth.currentUser!!.uid
+                    val user = User(id, username, email, password, phone, role)
+
+                    database.reference.child("users").child(userId).setValue(user)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this, MyPageActivity::class.java)) // 마이페이지로 이동
+                            finish()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "데이터 저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    Toast.makeText(this, "회원가입 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }

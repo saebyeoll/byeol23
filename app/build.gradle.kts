@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -45,6 +46,16 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth-ktx:23.1.0")
+    implementation("androidx.activity:activity:1.10.0")
+    implementation("com.google.firebase:firebase-database-ktx:21.0.0")
+
+        // Other dependencies
+    implementation ("com.google.firebase:firebase-messaging:23.1.0") // 최신 버전 확인
+
 
 
     testImplementation("junit:junit:4.13.2")

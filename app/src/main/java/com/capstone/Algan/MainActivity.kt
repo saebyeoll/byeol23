@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.menu_info -> {
                     // 내정보 화면으로 이동
-                    val intent = Intent(this, InfoActivity::class.java)
+                    val intent = Intent(this, MyPageActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                     true
                 }
